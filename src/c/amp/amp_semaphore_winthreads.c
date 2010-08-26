@@ -167,3 +167,25 @@ int amp_semaphore_signal(amp_semaphore_t semaphore)
 }
 
 
+int amp_semaphore_trywait_PROPOSED(amp_semaphore_t semaphore)
+{
+    int retval = AMP_SUCCESS;
+    
+    assert(NULL != semaphore);
+	
+    DWORD return_code = WaitForSingleObject(semaphore->semaphore_handle, 0);
+	
+    if (WAIT_TIMEOUT == return_code) {
+        retval = AMP_BUSY; /* Semaphore was already locked */
+    }
+    else if (WAIT_OBJECT_0 != return_code) {
+        
+        DWORD const last_error = GetLastError();
+        assert(0); /* Programming error */
+
+        retval = AMP_ERROR;
+    }
+    
+    return retval;
+}
+

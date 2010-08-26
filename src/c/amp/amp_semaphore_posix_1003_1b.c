@@ -177,5 +177,24 @@ int amp_semaphore_signal(amp_semaphore_t semaphore)
     return return_code;    
 }
 
-
+int amp_semaphore_trywait_PROPOSED(amp_semaphore_t semaphore)
+{
+    assert(NULL != semaphore);
+	
+    errno = 0;
+    int retval = sem_trywait(&semaphore->semaphore);    
+    int return_code = AMP_SUCCESS;
+    if(0 != retval) {        
+        switch (errno) {
+            case EAGAIN: /* Semaphore was already locked */
+                return_code = AMP_BUSY;
+                break;
+            default:
+                assert(0); /* Programming error */
+                return_code = AMP_ERROR;
+        }
+    }
+    
+    return return_code;    
+}
 

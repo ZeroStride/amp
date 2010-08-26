@@ -207,7 +207,38 @@ extern "C" {
     int amp_semaphore_signal(amp_semaphore_t semaphore);
     
     
-    
+    /**
+     * If the semaphore counter is not zero decrements the counter and returns.
+     * If the counter is zero, this function will not alter the semaphore counter
+     * and will return immediately.
+     *
+     * @note This is a proposed function, and the implementation has not yet been 
+     *       approved by the project author for inclusion in the library.
+     *
+     * @return AMP_SUCCESS if semphore was locked successfuly.
+	 *         AMP_BUSY if semaphore counter was 0 when attempted.
+     *         AMP_ERROR if the semaphore was interrupted by a signal when using
+     *         a backend that supports signal interruption.
+     *         AMP_UNSUPPORTED if the backend doesn't support semaphores.
+     *         Error codes might be returned to signal errors while
+     *         waiting, too. These are programming errors and mustn't 
+     *         occur in release code. When @em amp is compiled without NDEBUG
+     *         set it might assert that these programming errors don't happen.
+     *         AMP_ERROR if a deadlock condition was detected, or if the 
+     *         semaphore isn't valid, e.g. not initialized, or if the process 
+     *         lacks privileges to wait on the semaphore.
+     *
+     * @attention sem mustn't be NULL.
+     *
+     * @attention Based on the backend amp_raw_semaphores might or might not 
+     *            react to / are or are not usable with signals. Set the threads
+     *            signal mask to not let any signals through.
+     *
+     * TODO: @todo Decide if OS signals should be able to interrupt the waiting.
+     */
+    int amp_semaphore_trywait_PROPOSED(amp_semaphore_t semaphore);
+	
+	
     
     
 #if defined(__cplusplus)
