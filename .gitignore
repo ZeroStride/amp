@@ -43,3 +43,9 @@ Thumbs.db
 
 #Ignore Doxygen generated html documentation
 doc/html/
+
+#Ignore CMake files
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
