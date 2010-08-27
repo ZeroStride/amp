@@ -134,7 +134,7 @@ int amp_semaphore_trywait_PROPOSED(amp_semaphore_t semaphore)
     assert(NULL != semaphore);
     assert(NULL != semaphore->semaphore);
     
-    int return_code = AMP_SUCCESS
+    int return_code = AMP_SUCCESS;
     long retval = dispatch_semaphore_wait(semaphore->semaphore, 0);
     
     if (0 != retval) {
