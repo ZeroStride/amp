@@ -96,7 +96,7 @@ ELSE()
             src/c/amp/amp_platform_sysctl.c
         )
     ELSEIF(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_COMPILER_IS_GNUCC)
-        ADD_DEFINITIONS(-DAMP_USE_POSIX_1003_1B_SEMAPHORES)
+        ADD_DEFINITIONS(-DAMP_USE_POSIX_1003_1B_SEMAPHORES -DSEM_VALUE_MAX=200000)
         SET(AMP_LIB_SRC ${AMP_LIB_SRC} 
             src/c/amp/amp_semaphore_posix_1003_1b.c
             src/c/amp/amp_platform_gnuc.c
