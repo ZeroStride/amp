@@ -6,7 +6,7 @@ SET(MAJOR_VERSION "0")
 SET(MINOR_VERSION "1")
 
 # System architecture detection
-IF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "i[3-6]86")
+IF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "i[3-6]86|x86")
 	SET(i386 1)
 	SET(LIB_SUFFIX "" CACHE STRING "Choose the suffix of the lib folder (if any) : None 32")
 ELSEIF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64|amd64")
@@ -97,7 +97,6 @@ ELSE()
         )
     ELSEIF(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_COMPILER_IS_GNUCC)
         ADD_DEFINITIONS(-DAMP_USE_POSIX_1003_1B_SEMAPHORES -DSEM_VALUE_MAX=2147483647)
-        ADD_DEFINITIONS(-DAMP_USE_POSIX_1003_1B_SEMAPHORES -D_GNU_SOURCE -DSEM_VALUE_MAX=42)
         SET(AMP_LIB_SRC ${AMP_LIB_SRC} 
             src/c/amp/amp_semaphore_posix_1003_1b.c
             src/c/amp/amp_platform_gnuc.c
